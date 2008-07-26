@@ -34,7 +34,10 @@ module Mobile
         @params[:username], 
         @params[:pin],
         msg.receiver, 
-        msg.message
+        msg.message,
+        '0',
+        '', '',
+        '0'
       )
     end
     
@@ -55,12 +58,13 @@ module Mobile
     class ProxySoap
       def initialize(params)
         @server = SOAP::RPC::Driver.new(params[:server], params[:namespace])
-        @server.add_method('sendSMS', 'uName', 'uPin', 'MSISDN', 'messageString')
+        @server.add_method('sendSMS', 'uName', 'uPin', 'MSISDN', 'messageString',
+          'Display', 'udh', 'mwi', 'coding')
       end
       
-      def send_sms(uname, upin, msisdn, message)
-        result = @server.sendSMS(uname, upin, msisdn, message)
-        GlobeProxyResponse.new(result.to_i)
+      def send_sms(uname, upin, msisdn, message, display, udh, mwi, coding)
+        result = @server.sendSMS(uname, upin, msisdn, message, display, udh, mwi, coding)
+        GlobeProxyResponse.new(result.to_s)
       end
     end
     
