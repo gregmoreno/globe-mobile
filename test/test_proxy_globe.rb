@@ -2,18 +2,16 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 describe "using Globe Mobile API" do
   def valid_proxy_params
-    { :username => ENV['USERNAME'] || 'moko',
-      :pin      => ENV['USERPIN']  || '1234',
-      :server   => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
+    {:username => ENV['USERNAME'] || 'moko',
+     :pin      => ENV['USERPIN']  || '1234',
+     :server   => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   
   def valid_sms_params
-    Mobile::SMS.new({
-      :sender   => '09179699677',
-      :receiver => '09179699677',
-      :message  => 'sms from user1'
-      })
+    {:receiver => '09179699677',
+     :message  => 'sms from user1'
+     }
   end
   
   describe "required parameters on initialization" do

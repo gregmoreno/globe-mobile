@@ -33,8 +33,8 @@ module Mobile
       server.send_sms(
         @params[:username], 
         @params[:pin],
-        msg.receiver, 
-        msg.message,
+        msg[:receiver], 
+        msg[:message],
         '0',
         '', '',
         '0'
@@ -64,7 +64,7 @@ module Mobile
       
       def send_sms(uname, upin, msisdn, message, display, udh, mwi, coding)
         result = @server.sendSMS(uname, upin, msisdn, message, display, udh, mwi, coding)
-        GlobeProxyResponse.new(result.to_s)
+        GlobeProxyResponse.new(result.to_i)
       end
     end
     

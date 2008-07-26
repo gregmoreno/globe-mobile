@@ -16,21 +16,7 @@ module Mobile
         :use_ssl => true,
       }.merge(options)
     end
-  end
-  
-  class SMS
-    # Storage for an SMS that will be sent
-    # Standard compliant and not tied to any mobile provider    
-    attr_reader :params
-    
-    def initialize(options = {})
-      @params = options
-    end
-    
-    def method_missing(method_id, *arguments)
-      @params[method_id.to_sym]
-    end
-  end    
+  end  
 end
 
 
