@@ -1,7 +1,7 @@
 #--
 # Mobile API Ruby library
 #
-# Ruby Gem Name::  gl-mobile
+# Ruby Gem Name::  globe-mobile
 # Author::    Greg Moreno  (mailto:greg.moreno@gmail.com)
 # Copyright:: Copyright (c) 2008 Greg Moreno
 # License::   Distributes under the same terms as Ruby

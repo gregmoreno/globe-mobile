@@ -43,7 +43,7 @@ module Mobile
     
     class << self
       def parse_callback_xml(xml)
-        GlobeSMSData.parse_xml(xml)
+        GlobeCallback.parse_xml(xml)
       end
     end
     
@@ -68,7 +68,7 @@ module Mobile
       end
     end
     
-    class GlobeSMSData
+    class GlobeCallback
       @@field_map = {
         'id'     => :id,
         'source' => :sender,
