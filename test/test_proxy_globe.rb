@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
-describe "using Globe Mobile API" do
+describe "using Globe Mobile API" do  
   def valid_proxy_params
     {:username => ENV['USERNAME'] || 'moko',
      :pin      => ENV['USERPIN']  || '1234',
@@ -9,8 +9,8 @@ describe "using Globe Mobile API" do
   end
   
   def valid_sms_params
-    {:receiver => '09179699677',
-     :message  => 'sms from user1'
+    {:receiver => valid_globe_users[:mikong][:phone],
+     :message  => 'hello. using globe api'
      }
   end
   
