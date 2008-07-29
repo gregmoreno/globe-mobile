@@ -40,6 +40,17 @@ module Mobile
         '0'
       )
     end
+
+    def send_mms(mms)
+      validate_presence_of :to, :subject, :body, :in => mms
+      server.send_mms(
+        @params[:username],
+        @params[:pin],
+        mms[:to],
+        mms[:subject],
+        mms[:body]
+      )
+    end
     
     class << self
       def parse_callback_xml(xml)
@@ -60,10 +71,21 @@ module Mobile
         @server = SOAP::RPC::Driver.new(params[:server], params[:namespace])
         @server.add_method('sendSMS', 'uName', 'uPin', 'MSISDN', 'messageString',
           'Display', 'udh', 'mwi', 'coding')
+
+        @server.add_method('sendMMS', 'uName', 'uPin', 'MSISDN', 'Subject', 'SMIL')
       end
       
       def send_sms(uname, upin, msisdn, message, display, udh, mwi, coding)
         result = @server.sendSMS(uname, upin, msisdn, message, display, udh, mwi, coding)
+        GlobeProxyResponse.new(result.to_i)
+      end
+
+      def send_mms(u_name, u_pin, msisdn, subject, smil)
+        result = @server.sendMMS(u_name, u_pin, msisdn, subject, smil)
+
+        # XXX API bug? If smil is not well-formed, sendMMS returns an empty
+        # SOAP::Mapping::Object. For now, force the result to "402 MMS sending failed"
+        result = 402 if result.is_a? SOAP::Mapping::Object
         GlobeProxyResponse.new(result.to_i)
       end
     end

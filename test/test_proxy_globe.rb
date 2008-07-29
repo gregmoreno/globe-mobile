@@ -13,7 +13,15 @@ describe "using Globe Mobile API" do
      :message  => 'hello. using globe api'
      }
   end
-  
+
+  def valid_mms_params
+    {
+      :to => valid_globe_users[:mikong][:phone],
+      :subject => 'Testing MMS',
+      :body => '<smil></smil>'
+    }
+  end
+
   describe "required parameters on initialization" do
     before(:each) do
       @params = valid_proxy_params
@@ -95,7 +103,31 @@ describe "using Globe Mobile API" do
       }
     end
   end
-  
+
+  describe 'to send an MMS' do
+    before do
+      @mms = valid_mms_params
+    end
+
+    it 'should succeed' do
+      server.send_mms(@mms).should be_mms_accepted
+    end
+
+    [:to, :subject, :body].each do |param|
+      it "should require #{param} parameter" do
+        @mms.delete param
+	lambda do
+	  server.send_mms @mms
+	end.should raise_error ArgumentError
+      end
+    end
+
+    it 'should return 402 if smil is not well-formed' do
+      @mms.update :smil => 'not-well formed smil'
+      server.send_mms(@mms).code.should == 402
+    end
+  end
+
   describe "MMS callback data" do
     def valid_mms_xml
       %{
