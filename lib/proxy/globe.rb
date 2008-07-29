@@ -29,26 +29,28 @@ module Mobile
       @server ||= send("initialize_proxy_#{@params[:transport]}", @params)
     end
     
-    def send_sms(msg)
+    def send_sms(sms)
+      validate_presence_of :to, :message, :in => sms
       server.send_sms(
         @params[:username], 
         @params[:pin],
-        msg[:receiver], 
-        msg[:message],
-        '0',
-        '', '',
-        '0'
+        sms[:to], 
+        sms[:message],
+        sms[:display] || '1',
+        sms[:user_data_header] || '',
+	sms[:message_waiting_indicator] || '',
+        sms[:coding] || '0'
       )
     end
 
     def send_mms(mms)
-      validate_presence_of :to, :subject, :body, :in => mms
+      validate_presence_of :to, :subject, :in => mms
       server.send_mms(
         @params[:username],
         @params[:pin],
         mms[:to],
         mms[:subject],
-        mms[:body]
+        mms[:body] || ''
       )
     end
     

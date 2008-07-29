@@ -9,8 +9,9 @@ describe "using Globe Mobile API" do
   end
   
   def valid_sms_params
-    {:receiver => valid_globe_users[:mikong][:phone],
-     :message  => 'hello. using globe api'
+    {
+       :to => valid_globe_users[:mikong][:phone],
+       :message  => 'hello. using globe api'
      }
   end
 
@@ -51,18 +52,21 @@ describe "using Globe Mobile API" do
   end
     
   describe "to send an SMS" do
-    def sms
-      valid_sms_params
+    before do
+      @sms = valid_sms_params
     end
 
-    it "should not be allowed for some reason" do
-      server.send_sms(sms).should be_sms_accepted
-      pending "This is just an illustration for further tests."
+    it 'should succeed' do
+      server.send_sms(@sms).should be_sms_accepted
     end
-    
-    it "should fail" do
-      server.send_sms(sms).code.should == 201
-      pending "This is just an illustration"
+
+    [:to, :message].each do |param|
+      it "should require #{param} parameter" do
+        @sms.delete param
+	lambda do
+          server.send_sms(@sms)
+	end.should raise_error ArgumentError
+      end
     end
   end
   
@@ -113,7 +117,7 @@ describe "using Globe Mobile API" do
       server.send_mms(@mms).should be_mms_accepted
     end
 
-    [:to, :subject, :body].each do |param|
+    [:to, :subject].each do |param|
       it "should require #{param} parameter" do
         @mms.delete param
 	lambda do
