@@ -1,1 +1,11 @@
 = Mobile API Ruby Gem
+
+== Required gems
+
+For using the API:
+  soap4r
+  xml-simple
+
+For testing and debugging:
+  rspec
+  ruby-debug
