@@ -2,9 +2,10 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 
 describe "using Globe Mobile API" do  
   def valid_proxy_params
-    {:username => ENV['USERNAME'] || 'moko',
-     :pin      => ENV['USERPIN']  || '1234',
-     :server   => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
+    {
+      :username => ENV['USERNAME'] || 'moko',
+      :pin      => ENV['USERPIN']  || '1234',
+      :server   => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   
@@ -89,18 +90,26 @@ describe "using Globe Mobile API" do
         <name>msg</name>
         <value>message</value>
       </param>
+      <param>
+        <name>unknown</name>
+        <value>unknown</value>
+      </param>      
       </message>
-        }
+      }
     end
     
     def sms_data
       @sms ||= Mobile::GlobeProxy.parse_callback_xml(valid_sms_xml)
     end
     
-    [:id, :sender, :receiver, :message].each do |param|
+    [:id, :from, :to, :message].each do |param|
       it "should have #{param}" do
         sms_data[param].should_not be_empty
       end
+    end
+    
+    it "should capture unknown params" do
+      sms_data[:unknown].should_not be_empty
     end
   end
 
@@ -156,6 +165,10 @@ describe "using Globe Mobile API" do
           <file>http://localhost:1234/testing.txt</file>
         </value>
       </param>
+      <param>
+        <name>unknown</name>
+        <value>unknown</value>
+      </param> 
       </message>
       }
     end
@@ -164,10 +177,14 @@ describe "using Globe Mobile API" do
       @mms ||= Mobile::GlobeProxy.parse_callback_xml(valid_mms_xml)
     end
     
-    [:type, :subject, :file, :sender, :receiver].each do |param|
+    [:type, :subject, :file, :from, :to].each do |param|
       it "should have #{param}" do
         mms_data[param].should_not be_empty
       end
+    end
+    
+    it "should capture unknown params" do
+      mms_data[:unknown].should_not be_empty
     end
   end
 end

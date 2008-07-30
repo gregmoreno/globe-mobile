@@ -38,7 +38,7 @@ module Mobile
         sms[:message],
         sms[:display] || '1',
         sms[:user_data_header] || '',
-	sms[:message_waiting_indicator] || '',
+	      sms[:message_waiting_indicator] || '',
         sms[:coding] || '0'
       )
     end
@@ -95,8 +95,8 @@ module Mobile
     class GlobeCallback
       @@field_map = {
         'id'     => :id,
-        'source' => :sender,
-        'target' => :receiver,
+        'source' => :from,
+        'target' => :to,
         'msg'    => :message,
         'file'   => :file,
         'subject'     => :subject,
@@ -108,7 +108,8 @@ module Mobile
           message = XmlSimple.xml_in(xml)
           message['param'].inject({}) do |h, param|
             k, v = param['name'].first, param['value'].first
-            h[@@field_map[k]] = v
+            # Should still capture unknown parameters
+            h[(f = @@field_map[k]) ? f : k.to_sym] = v
             h
           end
         end
