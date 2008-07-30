@@ -10,9 +10,9 @@ describe "using Globe Mobile API" do
   
   def valid_sms_params
     {
-       :to => valid_globe_users[:mikong][:phone],
-       :message  => 'hello. using globe api'
-     }
+      :to => valid_globe_users[:mikong][:phone],
+      :message  => 'hello. using globe api'
+    }
   end
 
   def valid_mms_params
@@ -29,21 +29,19 @@ describe "using Globe Mobile API" do
     end
   
     [:username, :pin, :server].each do |param|
-      class_eval %{
-        it "should require #{param}" do
-          @params.delete(param)
-          lambda {
-            Mobile::GlobeProxy.new(@params)
-          }.should raise_error(ArgumentError)
-        end
-        
-        it "should not be empty #{param}" do
-          @params.merge!(param => '')
-          lambda {
-            Mobile::GlobeProxy.new(@params)
-          }.should raise_error(ArgumentError)
-        end
-      }
+      it "should require #{param}" do
+        @params.delete(param)
+        lambda {
+          Mobile::GlobeProxy.new(@params)
+        }.should raise_error(ArgumentError)
+      end
+      
+      it "should not be empty #{param}" do
+        @params.merge!(param => '')
+        lambda {
+          Mobile::GlobeProxy.new(@params)
+        }.should raise_error(ArgumentError)
+      end
     end
   end
 
@@ -62,10 +60,10 @@ describe "using Globe Mobile API" do
 
     [:to, :message].each do |param|
       it "should require #{param} parameter" do
-        @sms.delete param
-	lambda do
+        @sms.delete(param)
+        lambda do
           server.send_sms(@sms)
-	end.should raise_error ArgumentError
+        end.should raise_error(ArgumentError)
       end
     end
   end
@@ -100,11 +98,9 @@ describe "using Globe Mobile API" do
     end
     
     [:id, :sender, :receiver, :message].each do |param|
-      class_eval %{
-        it "should have #{param}" do
-          sms_data[param].should_not be_empty
-        end
-      }
+      it "should have #{param}" do
+        sms_data[param].should_not be_empty
+      end
     end
   end
 
@@ -119,10 +115,10 @@ describe "using Globe Mobile API" do
 
     [:to, :subject].each do |param|
       it "should require #{param} parameter" do
-        @mms.delete param
-	lambda do
-	  server.send_mms @mms
-	end.should raise_error ArgumentError
+        @mms.delete(param)
+        lambda do
+          server.send_mms @mms
+        end.should raise_error(ArgumentError)
       end
     end
 
@@ -169,11 +165,9 @@ describe "using Globe Mobile API" do
     end
     
     [:type, :subject, :file, :sender, :receiver].each do |param|
-      class_eval %{
-        it "should have #{param}" do
-          mms_data[param].should_not be_empty
-        end
-      }
+      it "should have #{param}" do
+        mms_data[param].should_not be_empty
+      end
     end
   end
 end
