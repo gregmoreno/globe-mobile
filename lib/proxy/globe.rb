@@ -94,13 +94,14 @@ module Mobile
     
     class GlobeCallback
       @@field_map = {
-        'id'     => :id,
-        'source' => :from,
-        'target' => :to,
-        'msg'    => :message,
-        'file'   => :file,
-        'subject'     => :subject,
-        'messageType' => :type
+        'id'          => :id,        # unique message identifier
+        'source'      => :sender,    # sender MSISDN/cellular number
+        'target'      => :recipient, # receiver MSISDN/cellular number
+        'msg'         => :message,   # message
+        'file'        => :files,     # MMS attachments
+        'subject'     => :subject,   # MMS subject
+        'messageType' => :type,      # "SMS" or "MMS"
+        'type'        => :status     # delivery status report code
       }
       
       class << self

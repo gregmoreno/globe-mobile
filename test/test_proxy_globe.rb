@@ -102,7 +102,7 @@ describe "using Globe Mobile API" do
       @sms ||= Mobile::GlobeProxy.parse_callback_xml(valid_sms_xml)
     end
     
-    [:id, :from, :to, :message].each do |param|
+    [:id, :sender, :recipient, :message].each do |param|
       it "should have #{param}" do
         sms_data[param].should_not be_empty
       end
@@ -177,7 +177,7 @@ describe "using Globe Mobile API" do
       @mms ||= Mobile::GlobeProxy.parse_callback_xml(valid_mms_xml)
     end
     
-    [:type, :subject, :file, :from, :to].each do |param|
+    [:type, :subject, :files, :sender, :recipient].each do |param|
       it "should have #{param}" do
         mms_data[param].should_not be_empty
       end
