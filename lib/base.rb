@@ -9,12 +9,15 @@
 
 module Mobile
   class Base
-    attr_reader :params
+    attr_reader :params, :response
+    
     
     def initialize(options)
       @params = {                 
         :use_ssl => true,
       }.merge(options)
+      
+      @response = nil
     end
   end  
 end

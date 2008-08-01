@@ -52,18 +52,23 @@ describe "using Globe Mobile API" do
     
   describe "to send an SMS" do
     before do
-      @sms = valid_sms_params
+      @params = valid_sms_params
     end
 
     it 'should succeed' do
-      server.send_sms(@sms).should be_sms_accepted
+      server.send_sms(@params).should be_sms_accepted
+      # or altenatively, check on the response
+      # server.send_sms(@sms)
+      # server.response.should be_sms_accepted
+      # or using the response code
+      # server.response.response_code.should == 201
     end
 
     [:to, :message].each do |param|
       it "should require #{param} parameter" do
-        @sms.delete(param)
+        @params.delete(param)
         lambda do
-          server.send_sms(@sms)
+          server.send_sms(@params)
         end.should raise_error(ArgumentError)
       end
     end
@@ -115,25 +120,26 @@ describe "using Globe Mobile API" do
 
   describe 'to send an MMS' do
     before do
-      @mms = valid_mms_params
+      @params = valid_mms_params
     end
 
     it 'should succeed' do
-      server.send_mms(@mms).should be_mms_accepted
+      server.send_mms(@params).should be_mms_accepted
     end
 
     [:to, :subject].each do |param|
       it "should require #{param} parameter" do
-        @mms.delete(param)
+        @params.delete(param)
         lambda do
-          server.send_mms @mms
+          server.send_mms @params
         end.should raise_error(ArgumentError)
       end
     end
 
     it 'should return 402 if smil is not well-formed' do
-      @mms.update :smil => 'not-well formed smil'
-      server.send_mms(@mms).code.should == 402
+      @params.update :smil => 'not-well formed smil'
+      server.send_mms(@params)
+      server.response.response_code.should == 402
     end
   end
 

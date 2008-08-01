@@ -14,7 +14,7 @@ module Mobile
     
     # This is the version of the API that we will use
     API_VERSION = '1.03'
-  
+    
     def initialize(params = {})
       params = {
         :transport => 'soap',
@@ -28,10 +28,10 @@ module Mobile
     def server
       @server ||= send("initialize_proxy_#{@params[:transport]}", @params)
     end
-    
+        
     def send_sms(sms)
       validate_presence_of :to, :message, :in => sms
-      server.send_sms(
+      @response = server.send_sms(
         @params[:username], 
         @params[:pin],
         sms[:to], 
@@ -45,7 +45,7 @@ module Mobile
 
     def send_mms(mms)
       validate_presence_of :to, :subject, :in => mms
-      server.send_mms(
+      @response = server.send_mms(
         @params[:username],
         @params[:pin],
         mms[:to],
@@ -119,7 +119,7 @@ module Mobile
   end
   
   class GlobeProxyResponse
-    attr_reader :code
+    attr_reader :response_code
     
     @@error_map = {
       :sms_accepted? => 201,
@@ -138,21 +138,19 @@ module Mobile
     }
     
     def initialize(code)
-      @code = code
+      @response_code = code
     end
     
     def valid?
-      [201, 202].include?(@code)
+      [201, 202].include?(@response_code)
     end
 
     def method_missing(method_id)
       if code = @@error_map[method_id.to_sym]
-        @code == code
+        @response_code == code
       else
         raise NoMethodError, "undefined GlobeProxyResponse matcher"
       end
     end
   end
-  
-
 end
