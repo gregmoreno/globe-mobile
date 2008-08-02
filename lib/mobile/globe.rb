@@ -7,7 +7,7 @@ module Mobile
   # Required values when using this service
   # :username => String
   # :pin => String
-  # :server => String
+  # :url => String
   class GlobeProxy < Base
     include Validation
     
@@ -136,12 +136,36 @@ module Mobile
       :invalid_coding?  => 504,
     }
     
+    @@status_messages = {
+      201 => "SMS Accepted for delivery",
+      202 => "MMS Accepted for delivery",
+      301 => "User is not allowed to access this service",
+      302 => "User exceeded daily cap",
+      303 => "Invalid message_length",
+      304 => "Maximum number of simultaneous connections reached",
+      305 => "Invalid login credentials",
+      401 => "SMS sending failed",
+      402 => "MMS sending failed",
+      501 => "Invalid target MSISDN",
+      502 => "Invalid display type",
+      503 => "Invalid MWI",
+      504 => "Invalid coding"
+    }
+    
     def initialize(code)
       @response_code = code
     end
     
     def valid?
       [201, 202].include?(@response_code)
+    end
+    
+    def message(code = @response_code)
+      if msg = @@status_messages[code]
+        msg
+      else
+        raise ArgumentError, "undefined response code"
+      end
     end
 
     def method_missing(method_id)

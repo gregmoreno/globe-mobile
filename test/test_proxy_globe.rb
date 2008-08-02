@@ -3,9 +3,9 @@ require File.dirname(__FILE__) + '/test_helper.rb'
 describe "using Globe Mobile API" do  
   def valid_proxy_params
     {
-      :username => ENV['USERNAME'] || 'moko',
-      :pin      => ENV['USERPIN']  || '1234',
-      :url   => ENV['SERVER']   ||'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
+      :username => ENV['GT_USERNAME'] || 'moko',
+      :pin      => ENV['GT_PIN']  || '1234',
+      :url      => ENV['GT_URL']  || 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   
@@ -58,7 +58,7 @@ describe "using Globe Mobile API" do
     it 'should succeed' do
       server.send_sms(@params).should be_sms_accepted
       # or altenatively, check on the response
-      # server.send_sms(@sms)
+      # server.send_sms(@params)
       # server.response.should be_sms_accepted
       # or using the response code
       # server.response.response_code.should == 201
@@ -191,6 +191,18 @@ describe "using Globe Mobile API" do
     
     it "should capture unknown params" do
       mms_data[:unknown].should_not be_empty
+    end
+  end
+  
+  describe "Proxy response" do
+    before do
+      @params = valid_sms_params
+    end
+
+    it do
+      server.send_sms(@params)
+      server.response.response_code.should_not be_nil
+      server.response.message.should_not be_empty
     end
   end
 end
