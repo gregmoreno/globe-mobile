@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'ruby-debug'
-require File.dirname(__FILE__) + '/../lib/mobile'
-
+require File.dirname(__FILE__) + '/../lib/base'
+require File.dirname(__FILE__) + '/../lib/mobile/globe'
 
 def valid_globe_users
   {

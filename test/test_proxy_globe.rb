@@ -5,7 +5,7 @@ describe "using Globe Mobile API" do
     {
       :username => ENV['USERNAME'] || 'moko',
       :pin      => ENV['USERPIN']  || '1234',
-      :server   => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
+      :server   => ENV['SERVER']   ||'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   

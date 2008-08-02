@@ -2,7 +2,6 @@ require 'rubygems'
 require 'soap/rpc/driver'
 require 'xmlsimple'
 
-
 module Mobile
   
   # Required values when using this service
