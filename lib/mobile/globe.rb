@@ -13,15 +13,16 @@ module Mobile
     
     # This is the version of the API that we will use
     API_VERSION = '1.03'
-    
+
     def initialize(params = {})
       params = {
         :transport => 'soap',
-        :namespace => 'http://ESCPlatform/xsd'
+        :namespace => 'http://ESCPlatform/xsd',
+        :url       => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
       }.merge(params)
 
       super(params)
-      validate_presence_of :username, :pin, :url, :transport, :in => @params            
+      validate_presence_of :username, :pin, :transport, :in => @params
     end
     
     def server

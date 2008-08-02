@@ -5,7 +5,6 @@ describe "using Globe Mobile API" do
     {
       :username => ENV['GT_USERNAME'] || 'moko',
       :pin      => ENV['GT_PIN']  || '1234',
-      :url      => ENV['GT_URL']  || 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   
@@ -29,7 +28,7 @@ describe "using Globe Mobile API" do
       @params = valid_proxy_params
     end
   
-    [:username, :pin, :url].each do |param|
+    [:username, :pin].each do |param|
       it "should require #{param}" do
         @params.delete(param)
         lambda {
@@ -136,10 +135,9 @@ describe "using Globe Mobile API" do
       end
     end
 
-    it 'should return 402 if smil is not well-formed' do
-      @params.update :smil => 'not-well formed smil'
-      server.send_mms(@params)
-      server.response.response_code.should == 402
+    it 'should fail gracefully if smil is not well-formed' do
+      @params[:body] = 'not well-formed smil'
+      server.send_mms(@params).should be_mms_failed
     end
   end
 
