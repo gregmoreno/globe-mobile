@@ -5,7 +5,7 @@ describe "using Globe Mobile API" do
     {
       :username => ENV['USERNAME'] || 'moko',
       :pin      => ENV['USERPIN']  || '1234',
-      :server   => ENV['SERVER']   ||'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
+      :url   => ENV['SERVER']   ||'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform/'
     }
   end
   
@@ -29,7 +29,7 @@ describe "using Globe Mobile API" do
       @params = valid_proxy_params
     end
   
-    [:username, :pin, :server].each do |param|
+    [:username, :pin, :url].each do |param|
       it "should require #{param}" do
         @params.delete(param)
         lambda {

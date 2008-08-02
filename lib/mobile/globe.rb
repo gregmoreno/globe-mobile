@@ -21,7 +21,7 @@ module Mobile
       }.merge(params)
 
       super(params)
-      validate_presence_of :username, :pin, :server, :transport, :in => @params            
+      validate_presence_of :username, :pin, :url, :transport, :in => @params            
     end
     
     def server
@@ -69,7 +69,7 @@ module Mobile
     
     class ProxySoap
       def initialize(params)
-        @server = SOAP::RPC::Driver.new(params[:server], params[:namespace])
+        @server = SOAP::RPC::Driver.new(params[:url], params[:namespace])
         @server.add_method('sendSMS', 'uName', 'uPin', 'MSISDN', 'messageString',
           'Display', 'udh', 'mwi', 'coding')
 
