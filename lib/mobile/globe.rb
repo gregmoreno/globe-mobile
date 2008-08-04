@@ -7,7 +7,6 @@ module Mobile
   # Required values when using this service
   # :username => String
   # :pin => String
-  # :url => String
   class GlobeProxy < Base
     include Validation
     

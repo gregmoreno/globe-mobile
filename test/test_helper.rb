@@ -10,7 +10,10 @@ def valid_globe_users
     },
     :mikong => {
       :phone => '09179699677'
-    }  
+    },
+    :greg => {
+      :phone => '09272611392'
+    }
   }
 end
 

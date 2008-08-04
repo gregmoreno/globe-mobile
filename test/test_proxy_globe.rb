@@ -10,14 +10,14 @@ describe "using Globe Mobile API" do
   
   def valid_sms_params
     {
-      :to => valid_globe_users[:mikong][:phone],
+      :to => valid_globe_users[:greg][:phone],
       :message  => 'hello. using globe api'
     }
   end
 
   def valid_mms_params
     {
-      :to => valid_globe_users[:mikong][:phone],
+      :to => valid_globe_users[:neil][:phone],
       :subject => 'Testing MMS',
       :body => '<smil></smil>'
     }
