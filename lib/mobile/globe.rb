@@ -21,18 +21,18 @@ module Mobile
       }.merge(params)
 
       super(params)
-      validate_presence_of :username, :pin, :transport, :in => @params
+      validate_presence_of :username, :pin, :transport, :in => self.params
     end
     
     def server
-      @server ||= send("initialize_proxy_#{@params[:transport]}", @params)
+      @server ||= send("initialize_proxy_#{self.params[:transport]}", self.params)
     end
         
     def send_sms(sms)
       validate_presence_of :to, :message, :in => sms
       @response = server.send_sms(
-        @params[:username], 
-        @params[:pin],
+        self.params[:username], 
+        self.params[:pin],
         sms[:to], 
         sms[:message],
         sms[:display] || '1',
@@ -45,8 +45,8 @@ module Mobile
     def send_mms(mms)
       validate_presence_of :to, :subject, :in => mms
       @response = server.send_mms(
-        @params[:username],
-        @params[:pin],
+        self.params[:username],
+        self.params[:pin],
         mms[:to],
         mms[:subject],
         mms[:body] || ''
