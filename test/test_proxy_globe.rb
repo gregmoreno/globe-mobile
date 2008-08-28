@@ -11,14 +11,14 @@ describe "using Globe Mobile API" do
   def valid_sms_params
     {
       :to => valid_globe_users[:greg][:phone],
-      :message  => 'hello. using globe api'
+      :message  => 'hello. using globe sms api'
     }
   end
 
   def valid_mms_params
     {
-      :to => valid_globe_users[:neil][:phone],
-      :subject => 'Testing MMS',
+      :to => valid_globe_users[:greg][:phone],
+      :subject => 'Testing using MMS api',
       :body => '<smil></smil>'
     }
   end
@@ -56,11 +56,6 @@ describe "using Globe Mobile API" do
 
     it 'should succeed' do
       server.send_sms(@params).should be_sms_accepted
-      # or altenatively, check on the response
-      # server.send_sms(@params)
-      # server.response.should be_sms_accepted
-      # or using the response code
-      # server.response.response_code.should == 201
     end
 
     [:to, :message].each do |param|
