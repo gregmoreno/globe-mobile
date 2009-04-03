@@ -1,11 +1,28 @@
-= Mobile API Ruby Gem
+= Globe-Mobile API in Ruby
 
-== Required gems
+* Website: http://github.com/gregmoreno/globe-mobile/tree/master
+
+== Developers
+* {Greg Moreno}[http://gregmoreno.ca] <hello at gregmoreno dot ca>
+* {Neil Decapia}
+* {Mikong Galero}
+
+== Description
+
+globe-mobile provides a Ruby-based interface to Globe Telecoms Mobile API platform.
+To learn more of the Globe's API, visit http://www.globelabs.com.ph
+
+
+== External gem dependencies 
 
 For using the API:
-  soap4r
-  xml-simple
+* SOAP4R (tested with soap4r-1.5.8)
+* XMLSimple (tested with xml-simple-1.0.12)
 
-For testing and debugging:
+For running tests
   rspec
-  ruby-debug
+
+
+== Usage examples
+
+TODO:
