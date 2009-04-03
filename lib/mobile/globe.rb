@@ -149,7 +149,11 @@ module Mobile
       501 => "Invalid target MSISDN",
       502 => "Invalid display type",
       503 => "Invalid MWI",
-      504 => "Invalid coding"
+      504 => "Invalid coding",
+      505 => "Empty value given in required argument",
+      506 => "Badly formed XML in SOAP request",
+      507 => "Argument too large",
+      509 => "Malformed SMIL"
     }
     
     def initialize(code)
