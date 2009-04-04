@@ -6,8 +6,8 @@ module Mobile::Globe::REST
   class Client
     include ClassUtilMixin  
     @@ATTRIBUTES = [
-      :username,
-      :pin,
+      :user_name,
+      :user_pin,
       :url,
     ]
     attr_accessor *@@ATTRIBUTES
@@ -19,7 +19,7 @@ module Mobile::Globe::REST
     raise ArgumentError, "Block must be provided to configure" unless block_given?
     yield @@config
 
-    [:username, :pin].each do |required|
+    [:user_name, :user_pin].each do |required|
       raise "#{required} must be configured" unless @@config.send(required)  
     end
     @@config
@@ -27,12 +27,16 @@ module Mobile::Globe::REST
 
 
   class Client
-    def send_sms(sms={})
-      create_http_post_request('sendSMS', sms.merge(:username => self.username, :pin => self.pin))
+    def send_sms(data)
+      sms = data.is_a?(Mobile::Globe::SMS) ? data.to_h : Mobile::Globe::SMS.new(data).to_h
+      sms.merge!(:uName => self.user_name, :uPin => self.user_pin) 
+      create_http_post_request('sendSMS', sms)
     end
 
-    def send_mms(mms={})
-      create_http_post_request('sendMMS', mms.merge(:username => self.username, :pin => self.pin))
+    def send_mms(data)
+      mms = data.is_a?(Mobile::Globe::MMS) ? data.to_h : Mobile::Globe::MMS.new(data).to_h
+      mms.merge!(:uName => self.user_name, :uPin => self.user_pin)
+      create_http_post_request('sendMMS', mms)
     end
 
     protected

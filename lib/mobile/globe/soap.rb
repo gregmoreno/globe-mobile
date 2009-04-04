@@ -9,8 +9,8 @@ module Mobile::Globe::SOAP
   class Client
     include ClassUtilMixin  
     @@ATTRIBUTES = [
-      :username,
-      :pin,
+      :user_name,
+      :user_pin,
       :url,
       :namespace
     ]
@@ -23,34 +23,36 @@ module Mobile::Globe::SOAP
     raise ArgumentError, "Block must be provided to configure" unless block_given?
     yield @@config
 
-    [:username, :pin].each do |required|
+    [:user_name, :user_pin].each do |required|
       raise "#{required} must be configured" unless @@config.send(required)  
     end
     @@config
   end # configure
 
   class Client
-    def send_sms(sms={})
+    def send_sms(data)
+      sms = data.is_a?(Mobile::Globe::SMS) ? data : Mobile::Globe::SMS.new(data)
       result = proxy.sendSMS(
-        self.username, 
-        self.pin,
-        sms[:to], 
-        sms[:message],
-        sms[:display] || '1',
-        sms[:user_data_header] || '',
-	      sms[:message_waiting_indicator] || '',
-        sms[:coding] || '0'
+        self.user_name, 
+        self.user_pin,
+        sms.to_number,
+        sms.message,
+        sms.display,
+        sms.user_data_header,
+        sms.message_waiting_indicator,
+        sms.coding
       )
       Mobile::Globe::Response.new(result)
     end
 
-    def send_mms(mms={})
+    def send_mms(data)
+      mms = data.is_a?(Mobile::Globe::MMS) ? data : Mobile::Globe::MMS.new(data)
       result = proxy.sendMMS(
-        self.username,
-        self.pin,
-        mms[:to],
-        mms[:subject],
-        mms[:body] || ''
+        self.user_name,
+        self.user_pin,
+        mms.to_number,
+        mms.subject,
+        mms.body
       )
       Mobile::Globe::Response.new(result)
     end
