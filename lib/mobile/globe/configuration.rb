@@ -1,7 +1,10 @@
 module Mobile::Globe::Configuration
+  def self.included(base)
+    base.extend ClassMethods
+  end
 
-  def self.append_features(klass)
-    def klass.configure(&block)
+  module ClassMethods
+    def configure(&block)
       config = self.new
       raise ArgumentError, "Block must be provided to configure" unless block_given?
       yield config
@@ -11,7 +14,6 @@ module Mobile::Globe::Configuration
       end
       config
     end
-    super
   end
 
 end
