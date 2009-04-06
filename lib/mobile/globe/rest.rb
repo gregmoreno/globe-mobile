@@ -28,13 +28,13 @@ module Mobile::Globe::REST
 
   class Client
     def send_sms(data)
-      sms = data.is_a?(Mobile::Globe::SMS) ? data.to_h : Mobile::Globe::SMS.new(data).to_h
+      sms = data.is_a?(Mobile::Globe::SMS) ? data.attributes : Mobile::Globe::SMS.new(data).attributes
       sms.merge!(:uName => self.user_name, :uPin => self.user_pin) 
       create_http_post_request('sendSMS', sms)
     end
 
     def send_mms(data)
-      mms = data.is_a?(Mobile::Globe::MMS) ? data.to_h : Mobile::Globe::MMS.new(data).to_h
+      mms = data.is_a?(Mobile::Globe::MMS) ? data.attributes : Mobile::Globe::MMS.new(data).attributes
       mms.merge!(:uName => self.user_name, :uPin => self.user_pin)
       create_http_post_request('sendMMS', mms)
     end

@@ -16,6 +16,8 @@ module Mobile::Globe
       :invalid_display? => 502,
       :invalid_mwi?     => 503,
       :invalid_coding?  => 504,
+      :missing_field?   => 505,
+      :badly_formed?    => 506,
       :argument_too_large? => 507,
       :malformed_smil?  => 509,
     }

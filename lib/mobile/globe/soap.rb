@@ -38,8 +38,8 @@ module Mobile::Globe::SOAP
         sms.to_number,
         sms.message,
         sms.display,
-        sms.user_data_header,
-        sms.message_waiting_indicator,
+        sms.udh,
+        sms.mwi,
         sms.coding
       )
       Mobile::Globe::Response.new(result)
