@@ -12,10 +12,10 @@ module ClassUtilMixin
 
     def set_attribute_aliases(attribs)
       attribs.each do |k, v|
-        class_eval <<-RUBY
+        class_eval <<-EOF
           alias_method :#{k},  :#{v} 
           alias_method :#{k}=, :#{v}=
-        RUBY
+        EOF
       end
     end
 

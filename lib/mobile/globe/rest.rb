@@ -1,32 +1,13 @@
 module Mobile::Globe::REST
-  @@defaults = {
-    :url       => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform'
-  }
 
   class Client
     include ClassUtilMixin  
-    @@ATTRIBUTES = [
-      :user_name,
-      :user_pin,
-      :url,
-    ]
-    attr_accessor *@@ATTRIBUTES
-  end
-  @@config = Client.new(@@defaults)
+    include Mobile::Globe::Configuration 
 
-  # TODO: configuration is shared among SOAP and REST
-  def self.configure(&block)
-    raise ArgumentError, "Block must be provided to configure" unless block_given?
-    yield @@config
+    set_default_attributes :user_name => nil,
+                           :user_pin  => nil,
+                           :url       => 'http://iplaypen.globelabs.com.ph:1881/axis2/services/Platform'
 
-    [:user_name, :user_pin].each do |required|
-      raise "#{required} must be configured" unless @@config.send(required)  
-    end
-    @@config
-  end # configure
-
-
-  class Client
     def send_sms(data)
       sms = data.is_a?(Mobile::Globe::SMS) ? data.attributes : Mobile::Globe::SMS.new(data).attributes
       sms.merge!(:uName => self.user_name, :uPin => self.user_pin) 

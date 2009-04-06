@@ -15,7 +15,7 @@ module Mobile::Globe
 
     set_attribute_aliases :to_number => :MSISDN,
      :message => :messageString,
-     :display => :Display,
+     :display => :Display
   end
 
   class MMS
