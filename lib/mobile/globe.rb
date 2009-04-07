@@ -9,7 +9,7 @@ module Mobile::Globe
 end
 require_local 'mobile/globe/response'
 require_local 'mobile/globe/models'
-require_local 'mobile/globe/configuration'
+require_local 'mobile/globe/config'
 require_local 'mobile/globe/soap'
 require_local 'mobile/globe/rest'
 require_local 'mobile/globe/callback'
