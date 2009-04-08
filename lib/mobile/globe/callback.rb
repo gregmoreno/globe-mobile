@@ -1,25 +1,35 @@
-module Mobile::Globe:Callback
-  @@field_map = {
-    'id'          => :id,        # unique message identifier
-    'source'      => :sender,    # sender MSISDN/cellular number
-    'target'      => :recipient, # receiver MSISDN/cellular number
-    'msg'         => :message,   # message
-    'file'        => :files,     # MMS attachments
-    'subject'     => :subject,   # MMS subject
-    'messageType' => :type,      # "SMS" or "MMS"
-    'type'        => :status     # delivery status report code
-  }
+module Mobile::Globe
+
+  class Callback
+    include ClassUtilMixin
+
+    @@DEFAULT_ATTRIBUTES = [:id, :source, :target, :msg, :files, :subject, :type, :status]
+    attr_accessor *@@DEFAULT_ATTRIBUTES
+
+    set_attribute_aliases :message => :msg
   
-  class << self
-    def parse_xml(xml)
-      # TODO: replace with hpricot
-      message = XmlSimple.xml_in(xml)
-      message['param'].inject({}) do |h, param|
-        k, v = param['name'].first, param['value'].first
-        # Should still capture unknown parameters
-        h[(f = @@field_map[k]) ? f : k.to_sym] = v
-        h
+    class << self
+      def parse_xml(xml)
+        # Because of some ambiguity in the API
+        field_map = {
+          'file'        => :files,
+          'messageType' => :type,   # "SMS" or "MMS"
+          'type'        => :status  # delivery status report code
+        }
+
+        # TODO: replace with hpricot
+        message = XmlSimple.xml_in(xml)
+        data = message['param'].inject({}) do |h, param|
+          k, v = param['name'].first, param['value'].first
+          h[(f = field_map[k]) ? f : k.to_sym] = v
+          h
+        end
+
+        attr_accessor *(data.keys - @@DEFAULT_ATTRIBUTES)
+        self.new(data)
       end
     end
+
   end
+
 end

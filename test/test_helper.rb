@@ -1,19 +1,10 @@
-require 'rubygems'
-require 'ruby-debug'
-require File.dirname(__FILE__) + '/../lib/base'
-require File.dirname(__FILE__) + '/../lib/mobile/globe'
+require 'yaml'
+require File.dirname(__FILE__) + '/../lib/mobile'
 
-def valid_globe_users
-  {
-    :neil => {
-      :phone => '09178257278'
-    },
-    :mikong => {
-      :phone => '09179699677'
-    },
-    :greg => {
-      :phone => '09272611392'
-    }
-  }
+# Config file should have the ff: values
+# :user_name: value
+# :user_pin: value
+def from_config
+  config ||= YAML::load(File.open((File.join(File.dirname(__FILE__), 'config.yml'))))
 end
 

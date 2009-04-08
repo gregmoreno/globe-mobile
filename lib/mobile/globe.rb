@@ -5,7 +5,8 @@ module Mobile::Globe
   module Configuration; end
   module SOAP; end
   module REST; end
-  module Callback; end
+  #module Callback; end
+  class Callback; end
 end
 require_local 'mobile/globe/response'
 require_local 'mobile/globe/models'
