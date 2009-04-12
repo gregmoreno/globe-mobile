@@ -26,12 +26,11 @@ module Mobile::Globe::REST
       url = URI.parse("#{self.url}/#{action}") 
       req = Net::HTTP::Post.new(url.path)
       req.set_form_data(params)
-      #p req.body
       response = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
       case response
       when Net::HTTPSuccess, Net::HTTPRedirection
-        xml = Hpricot::XML(response.body || '')
-        return Mobile::Globe::Response.new(xml.search("ns:return").first.inner_html)
+        xml =  XmlSimple.xml_in(response.body || '') 
+        return Mobile::Globe::Response.new(xml['return'].first)
       else
         res.error!
       end

@@ -3,7 +3,6 @@ require 'rubygems'
 module Mobile; end
 
 require 'xmlsimple'
-require 'hpricot'
 require 'net/https'
 require 'uri'
 

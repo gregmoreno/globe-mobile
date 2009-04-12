@@ -58,7 +58,7 @@ module Mobile::Globe
       if msg = @@status_messages[code]
         msg
       else
-        raise ArgumentError, "undefined response code"
+        raise ArgumentError, "#{code} - undefined response code"
       end
     end
 
