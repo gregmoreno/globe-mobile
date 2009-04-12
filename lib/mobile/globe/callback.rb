@@ -6,7 +6,9 @@ module Mobile::Globe
     @@DEFAULT_ATTRIBUTES = [:id, :source, :target, :msg, :files, :subject, :type, :status]
     attr_accessor *@@DEFAULT_ATTRIBUTES
 
-    set_attribute_aliases :message => :msg
+    set_attribute_aliases :message => :msg,
+                          :to_number => :target,
+                          :from_number => :source
   
     class << self
       def parse_xml(xml)
@@ -17,7 +19,6 @@ module Mobile::Globe
           'type'        => :status  # delivery status report code
         }
 
-        # TODO: replace with hpricot
         message = XmlSimple.xml_in(xml)
         data = message['param'].inject({}) do |h, param|
           k, v = param['name'].first, param['value'].first
