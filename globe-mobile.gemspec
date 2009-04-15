@@ -1,7 +1,7 @@
 require 'rubygems'
 Gem::Specification.new do |s|
   s.name     = "globe-mobile"
-  s.version  = "0.1.1"
+  s.version  = "0.0.2"
   s.author   = "Greg Moreno"
   s.email    = "greg.moreno@gmail.com"
   s.homepage = "http://www.globelabs.com.ph"
