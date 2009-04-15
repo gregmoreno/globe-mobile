@@ -25,16 +25,17 @@ For running tests
 
 == Usage examples
 
-require 'rubygems'
-gem 'globe-mobile', '>= 0.0.2'
-require 'mobile'
 
-
-client = Mobile::Globe::SOAP::Client.configure do |config|
-  config.user_name = 'globeUser'
-  config.user_pin  = 'someRandomPin'
-end
-
-response = client.send_sms(:to_number => '09062224406', :message => 'hello from globe api')
-puts response.sms_accepted? ? "SMS sent" : response
+  require 'rubygems'
+  gem 'globe-mobile', '>= 0.0.2'
+  require 'mobile'
+  
+  
+  client = Mobile::Globe::SOAP::Client.configure do |config|
+    config.user_name = 'globeUser'
+    config.user_pin  = 'someRandomPin'
+  end
+  
+  response = client.send_sms(:to_number => '09062224406', :message => 'hello from globe api')
+  puts response.sms_accepted? ? "SMS sent" : response
 
