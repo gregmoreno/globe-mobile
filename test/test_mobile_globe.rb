@@ -23,13 +23,13 @@ describe "Globe Mobile API" do
 
   describe "valid sms", :shared => true do
     it "should send" do
-      #client.send_sms(valid_sms_params).should be_sms_accepted
+      client.send_sms(valid_sms_params).should be_sms_accepted
     end
   end
 
   describe "valid mms", :shared => true do
     it "send mms" do
-      #client.send_mms(valid_mms_params).should be_mms_accepted
+      client.send_mms(valid_mms_params).should be_mms_accepted
     end 
   end
 

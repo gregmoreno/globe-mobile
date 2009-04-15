@@ -19,9 +19,9 @@ module Mobile::Globe
           'type'        => :status  # delivery status report code
         }
 
-        message = XmlSimple.xml_in(xml)
-        data = message['param'].inject({}) do |h, param|
-          k, v = param['name'].first, param['value'].first
+        doc = Nokogiri::parse(xml)
+        data = doc.search('//param').inject({}) do |h, param|
+          k, v = param.at('.//name').content.strip, param.at('.//value').content.strip
           h[(f = field_map[k]) ? f : k.to_sym] = v
           h
         end

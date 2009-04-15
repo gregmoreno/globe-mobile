@@ -29,8 +29,8 @@ module Mobile::Globe::REST
       response = Net::HTTP.new(url.host, url.port).start {|http| http.request(req) }
       case response
       when Net::HTTPSuccess, Net::HTTPRedirection
-        xml =  XmlSimple.xml_in(response.body || '') 
-        return Mobile::Globe::Response.new(xml['return'].first)
+        doc = Nokogiri::parse(response.body)
+        return Mobile::Globe::Response.new(doc.at('//ns:return').content)
       else
         res.error!
       end

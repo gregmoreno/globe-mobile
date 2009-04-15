@@ -2,7 +2,7 @@ require 'rubygems'
 
 module Mobile; end
 
-require 'xmlsimple'
+require 'nokogiri'
 require 'net/https'
 require 'uri'
 

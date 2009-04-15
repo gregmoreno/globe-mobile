@@ -1,7 +1,7 @@
 require 'rubygems'
 Gem::Specification.new do |s|
   s.name     = "globe-mobile"
-  s.version  = "0.0.2"
+  s.version  = "0.0.3"
   s.author   = "Greg Moreno"
   s.email    = "greg.moreno@gmail.com"
   s.homepage = "http://www.globelabs.com.ph"
@@ -11,6 +11,6 @@ Gem::Specification.new do |s|
   
   s.require_path = "lib"
 
-  s.add_dependency "xml-simple"
   s.add_dependency "soap4r"
+  s.add_dependency "nokogiri"
 end
